@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarRento - Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px; /* Adjusted padding for top to avoid content being hidden behind navbar */
+        }
+
+        /* Header Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #000;
+            border-bottom: 5px solid #ff2727;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-radius: 0 0 16px 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #ff1e00;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .user-info {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-left: auto;
+            padding: 10px;
+        }
+
+        .nav-links {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap; /* Ensures responsiveness */
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #000;
+            background-color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-btn.active,
+        .nav-btn.red-btn {
+            background-color: #ff1e00;
+            color: #fff;
+        }
+
+        .nav-btn:hover {
+            background-color: #ff1e00;
+            color: #fff;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 30px;
+            background-color: #111;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 39, 39, 0.5);
+        }
+
+        /* Ensuring full width for form and form rows */
+        form {
+            width: 100%;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            width: 100%;
+            flex-wrap: wrap; /* Wrap form fields on smaller screens */
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            width: 100%; /* Ensures input spans full width of its container */
+        }
+
+        .form-group input[type="file"] {
+            background-color: #333;
+            color: #333;
+        }
+
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff2727;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #a80000;
+        }
+
+        .logout {
+            display: inline-block;
+            background-color: #fff;
+            color: #333;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 25px;
+            margin-top: 15px; /* Adjust the margin to make space between buttons */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            width: 10%; /* Full width for consistent alignment */
+        }
+
+        .logout:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.05);
+        }
+
+        /* Link Styles */
+        a.view-link {
+            color: #ff2727;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 4px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        a.view-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #ff2727;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        a.view-link:hover {
+            color: #fff;
+            background-color: #ff2727;
+            padding: 0 8px;
+            border-radius: 20px;
+        }
+
+        a.view-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                text-align: center;
+                width: 90%;
+                background-color: #333;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+
+            .user-info {
+                font-size: 14px;
+                position: absolute;
+                top: 20px;
+                right: 60px;
+            }
+
+            .form-row {
+                flex-direction: column; /* Stack form fields on small screens */
+            }
+
+            .form-group {
+                flex: none;
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        // Function to enable edit mode
+        function enableEditMode() {
+            const formElements = document.querySelectorAll(".form-group input, .form-group select, .form-group textarea");
+            formElements.forEach(element => element.removeAttribute("readonly"));
+            document.querySelector("button[type='submit']").style.display = "inline-block";
+            document.querySelector(".button-edit").style.display = "none";
+        }
+
+        // Fetch user profile data from backend
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('profile.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        populateForm(data.data);
+                    } else {
+                        alert(data.message || "Failed to load profile data");
+                    }
+                })
+                .catch(error => console.error("Error fetching profile data:", error));
+        });
+
+        // Populate form fields with user data
+        function populateForm(user) {
+            document.querySelector("input[name='name']").value = user.name || "";
+            document.querySelector("input[name='email']").value = user.email || "";
+            document.querySelector("input[name='phone']").value = user.phone || "";
+            document.querySelector("input[name='dob']").value = user.dob || "";
+            document.querySelector("select[name='gender']").value = user.gender || "";
+            document.querySelector("select[name='address-type']").value = user.address_type || "";
+            document.querySelector("input[name='pincode']").value = user.pincode || "";
+            document.querySelector("textarea[name='address']").value = user.address || "";
+
+            // Aadhaar fields
+            document.querySelector("input[name='aadhaar']").value = user.aadhaar || "";
+
+            if (user.aadhaar_doc) {
+                const aadhaarDocLink = document.createElement("a");
+                aadhaarDocLink.href = user.aadhaar_doc;
+                aadhaarDocLink.textContent = " View Aadhaar";
+                aadhaarDocLink.classList.add("view-link");
+                document.querySelector(".form-group input[name='aadhaar-doc']").parentElement.appendChild(aadhaarDocLink);
+            }
+
+            document.querySelector("input[name='license_no']").value = user.license_no || "";
+
+            if (user.license) {
+                const licenseLink = document.createElement("a");
+                licenseLink.href = user.license;
+                licenseLink.textContent = "View License";
+                licenseLink.classList.add("view-link");
+                document.querySelector(".form-group input[name='license']").parentElement.appendChild(licenseLink);
+            }
+        }
+
+        function validateForm() {
+            const phone = document.querySelector("input[name='phone']").value;
+            const email = document.querySelector("input[name='email']").value;
+            const dob = document.querySelector("input[name='dob']").value;
+            const pincode = document.querySelector("input[name='pincode']").value;
+            const address = document.querySelector("textarea[name='address']").value;
+            const license_no = document.querySelector("input[name='license_no']").value;
+
+            const phoneRegex = /^[0-9]{10}$/;
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            const pincodeRegex = /^[0-9]{6}$/;
+
+            if (!phone.match(phoneRegex)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+            if (!email.match(emailRegex)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+            if (!dob) {
+                alert("Please select your date of birth.");
+                return false;
+            }
+            if (!pincode.match(pincodeRegex)) {
+                alert("Please enter a valid 6-digit pincode.");
+                return false;
+            }
+            if (!address) {
+                alert("Please enter your address.");
+                return false;
+            }
+            if (!license_no) {
+                alert("Please enter your license number.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="logo">Car<span>Rento</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="nav-links">
+            <a href="home.html" class="nav-btn">HOME</a>
+            <a href="cars.php" class="nav-btn">Cars</a>
+            <a href="Blog.html" class="nav-btn">Blog</a>
+            <a href="aboutus.html" class="nav-btn">About us</a>
+            <a href="contact.php" class="nav-btn">Contact us</a>
+        </nav>
+        <div class="user-info">Profile</div>
+    </header>
+
+    <!-- Form Section -->
+    <div class="form-container">
+        <form action="updateprofile.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" name="name" placeholder="Name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" placeholder="Email" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" name="phone" placeholder="Phone Number" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender *</label>
+                    <select name="gender" required readonly>
+                        <option value="" disabled>Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pin Code *</label>
+                    <input type="text" name="pincode" placeholder="Pin Code" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="address-type">Address-Type *</label>
+                    <select name="address-type" required readonly>
+                        <option value="" disabled>Select Address-Type</option>
+                        <option value="Permanent">Permanent</option>
+                        <option value="Temporary">Temporary</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <textarea name="address" placeholder="Address" rows="3" readonly></textarea>
+                </div> 
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="aadhaar">Aadhaar Number *</label>
+                    <input type="text" name="aadhaar" placeholder="Aadhaar Number" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="aadhaar-doc">Aadhaar Document *</label>
+                    <input type="file" name="aadhaar-doc">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="license_no">License Number *</label>
+                    <input type="text" name="license_no" placeholder="License Number" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="license">License Document *</label>
+                    <input type="file" name="license" accept="image/*,application/pdf" readonly>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="button" style="display:none;">Update Profile</button>
+                <button type="button" class="button button-edit" onclick="enableEditMode()">Edit Profile</button>
+                <button class="logout" onclick="window.location.href='logout.php'">Logout</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+    
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+      </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarRento - Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* Common styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #000;
+            border-bottom: 5px solid #ff2727;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .logo {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #ff1e00;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .nav-links{
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #000;
+            background-color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .nav-btn.active,
+        .nav-btn.red-btn {
+            background-color: #ff1e00;
+            color: #fff;
+        }
+
+        .nav-btn:hover {
+            background-color: #ff1e00;
+            color: #fff;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                text-align: center;
+                width: 90%;
+                background-color: #333;
+                padding: 15px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-auth {
+                display: none;
+            }
+        }
+
+        .blog-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+
+        .create-post-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff1e00;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            transition: background-color 0.3s;
+        }
+
+        .create-post-btn:hover {
+            background-color: #cc1800;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #ff1e00;
+        }
+
+        .blog-excerpt {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .blog-meta {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #ff1e00;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .read-more:hover {
+            background-color: #cc1800;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Car<span>Rento</span></div>
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-links" id="nav-links">
+            <a href="home.html" class="nav-btn">HOME</a>
+            <a href="cars.php" class="nav-btn">Cars</a>
+            <a href="Blog.html" class="nav-btn active">Blog</a>
+            <a href="aboutus.html" class="nav-btn">About us</a>
+            <a href="contact.php" class="nav-btn">Contact us</a>
+        </nav>
+    </header>
+
+    <div class="blog-container">
+        <a href="create-blog.html" class="create-post-btn">Create New Post</a>
+        
+        <div class="blog-grid" id="blogPosts">
+            <!-- Blog posts will be loaded dynamically -->
+        </div>
+    </div>
+
+    <div class="feedback-container" style="max-width: 1200px; margin: 50px auto;">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #ff1e00; background-color:white; border-radius:15px; padding:5px;">User Reviews</h2>
+        
+        <div class="feedback-list" id="feedbackList">
+            <!-- Feedback reviews will be loaded dynamically -->
+        </div>
+    </div>
+
+    <script>
+        // Fetch and display blog posts
+        fetch('blog.php')
+            .then(response => response.json())
+            .then(posts => {
+                const blogGrid = document.getElementById('blogPosts');
+                posts.forEach(post => {
+                    const postElement = `
+                        <div class="blog-card">
+                            <img src="uploads/blog/${post.image}" alt="${post.title}" class="blog-image">
+                            <div class="blog-content">
+                                <h2 class="blog-title">${post.title}</h2>
+                                <p class="blog-excerpt">${post.content}</p>
+                                <div class="blog-meta">
+                                    Posted by ${post.name} on ${new Date(post.createdon).toLocaleDateString()}
+                                </div>
+                                <a href="blog-post.php?id=${post.id}" class="read-more">Read More</a>
+                            </div>
+                        </div>
+                    `;
+                    blogGrid.innerHTML += postElement;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+
+             // Fetch and display user feedback
+            fetch('fetchfeedback.php')
+            .then(response => response.json())
+            .then(feedbacks => {
+                const feedbackList = document.getElementById('feedbackList');
+                feedbacks.forEach(feedback => {
+                    const feedbackElement = `
+                        <div class="feedback-card" style="background-color: #444; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <p style="color: #fff; font-size: 1.2em; margin-bottom: 10px;">Rating: ${feedback.rating} / 5</p>
+                            <p style="color: #ccc; font-size: 1em; margin-bottom: 10px;">"${feedback.comments}"</p>
+                            <div style="font-size: 0.9em; color: #888;">
+                                <strong>Booking ID:</strong> ${feedback.booking_id}<br>
+                                <strong>Email:</strong> ${feedback.email}<br>
+                                <strong>Submitted on:</strong> ${new Date(feedback.submitted_at).toLocaleDateString()}
+                            </div>
+                        </div>
+                    `;
+                    feedbackList.innerHTML += feedbackElement;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+    </script>
+</body>
+</html>

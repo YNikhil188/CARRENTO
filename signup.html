@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarRento- Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        /* Video Background */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensure the video is in the background */
+        }
+
+        /* Header Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+            border-bottom: 5px solid #ff2727;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-radius: 0 0 16px 16px;
+        }
+
+        
+        .logo {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #ff1e00;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #fff;
+            font-weight: bold;
+        }
+        
+        /* Signup Section */
+        .signup-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background for the login form */
+        }
+        
+        .signup-form {
+            width: 300px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background for the login form */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+        
+        .signup-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .signup-form input[type="text"],
+        .signup-form input[type="email"],
+        .signup-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        .signup-form label {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .signup-form input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .signup-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff2727;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .signup-form button:hover {
+            background-color: #230501;
+        }
+        
+        .signup-form p {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .signup-form a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        
+        .signup-form a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .signup-form {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .signup-form {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video class="video-background" autoplay loop muted>
+        <source src="img/bgloop3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="logo">Car<span>Rento</span></div>
+    </header>
+
+    <!-- Signup Section -->
+    <section class="signup-section">
+        <form class="signup-form" action="signup.php" method="post">
+            <h2>Signup</h2>
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="text" name="phone" placeholder="Phone Number (Optional)">
+            <input type="email" name="email" placeholder="Email (Optional)">            
+            <input type="password" name="password" placeholder="Password" required>
+            <br>
+            <br>
+            <!-- Terms and Conditions Checkbox -->
+            <label>
+                <br>
+                <input type="checkbox" name="terms" required>
+                I accept the <a href="terms.html" target="_blank">Terms and Conditions</a>
+            </label>
+            <br>
+            <button type="submit">Signup</button>
+            <br>
+            <br>
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </form>
+    </section>
+    <!-- Signup Section End -->
+</body>
+</html>

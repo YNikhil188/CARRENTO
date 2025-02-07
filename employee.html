@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #000;
+            border-bottom: 5px solid #ff2727;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .logo {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #ff1e00;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-family: 'italianno', sans-serif;
+            font-size: 36px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .nav-btn.red-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            background-color: #ff1e00;
+            color: #fff;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+          }
+
+        .container {
+            width:100%;
+            margin: 80px auto 20px; /* Adjusted for fixed navbar */
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word; /* Ensure long text doesn't overflow */
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: #ff2727;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px; /* Space between buttons */
+        }
+
+        button:hover {
+            background: #ff4d4d;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        span.accepted {
+            color: green;
+        }
+
+        span.rejected {
+            color: red;
+        }
+
+        #map {
+            height: 400px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* Fixed Message Emoji */
+        #message-emoji {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000;
+            background-color: #ff1e00;
+            color: #fff;
+            padding: 5px 5px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        #message-emoji:hover {
+            transform: scale(1.1);
+            background-color: #ff4d4d;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-right: 15px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .container {
+                margin: 100px auto 20px; /* Adjusted for fixed navbar */
+                padding: 10px;
+            }
+
+            table {
+                font-size: 14px;
+                overflow-x: auto; /* Ensure horizontal scrolling for smaller devices */
+                display: block; /* Make the table scrollable */
+            }
+
+            button {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
+            #map {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 24px;
+            }
+
+            .container {
+                margin: 120px auto 20px; /* Adjusted for fixed navbar */
+                padding: 5px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            button {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+
+            #map {
+                height: 250px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Car<span>Rento</span></div>
+        <a href="profile.html" class="nav-btn red-btn">Profile</a>
+    </header>
+    <div class="container">
+        <h1>Booking Details</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Car ID</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Pickup Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="bookingsTable">
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+        <div id="map"></div>
+    </div>
+    <div id="message-emoji" onclick="openChat()">
+        💬
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+
+
+        // Fetch booking data
+        async function fetchBookings() {
+            try {
+                const response = await fetch('get_bookings.php'); // Backend endpoint
+                const bookings = await response.json();
+
+                if (bookings.error) {
+                    console.error('Error:', bookings.error);
+                    return;
+                }
+
+                populateTable(bookings);
+            } catch (error) {
+                console.error('Error fetching bookings:', error);
+            }
+        }
+
+        // Populate the table with booking data
+        function populateTable(bookings) {
+            const tableBody = document.getElementById('bookingsTable');
+            tableBody.innerHTML = '';
+
+            bookings.forEach((booking) => {
+                const row = document.createElement('tr');
+                const statusCellContent = getStatusCellContent(booking.status, booking.booking_id, booking.latitude, booking.longitude);
+
+                row.innerHTML = `
+                    <td>${booking.booking_id}</td>
+                    <td>${booking.customer_name}</td>
+                    <td>${booking.car_id}</td>
+                    <td>${booking.start_date}</td>
+                    <td>${booking.end_date}</td>
+                    <td>${booking.latitude}, ${booking.longitude}</td>
+                    <td>${statusCellContent}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Get content for the "Actions" cell based on booking status
+        function getStatusCellContent(status, bookingId, latitude, longitude) {
+            if (status === 'accepted') {
+                return '<span class="accepted">Accepted</span> <button onclick="showLocation(${latitude}, ${longitude})">View on Map</button>';
+            } else {
+                return `
+                    <button onclick="showLocation(${latitude}, ${longitude})">View on Map</button>
+                    <button onclick="acceptPickup(${bookingId})">Accept</button>
+                `;
+            }
+        }
+
+        // Handle accept pickup action
+        function acceptPickup(bookingId) {
+            if (confirm("Are you sure you want to accept this pickup?")) {
+                updateBookingStatus(bookingId, 'accepted');
+            }
+        }
+
+        // Update booking status
+        async function updateBookingStatus(bookingId, status) {
+            try {
+                const response = await fetch('update_booking_status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ booking_id: bookingId, status }),
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(result.message);
+                    fetchBookings(); // Reload bookings to reflect changes
+                } else {
+                    alert('Error updating booking status.');
+                }
+            } catch (error) {
+                console.error('Error updating booking status:', error);
+            }
+        }
+
+        // Show the location on the map
+        function showLocation(lat, lng) {
+            const mapContainer = document.getElementById('map');
+            mapContainer.style.display = 'block';
+
+            if (!mapInitialized) {
+                map = L.map('map').setView([lat, lng], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                }).addTo(map);
+                mapInitialized = true;
+            } else {
+                map.setView([lat, lng], 13);
+            }
+
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup('Booking Location')
+                .openPopup();
+        }
+
+        function openChat() {
+            alert("Redirecting to the messaging page...");
+            window.location.href = "chat_employee.php"; // Update with your messaging page URL
+        }
+        let map; // Declare the map variable globally
+        let mapInitialized = false;
+
+        // Load booking data on page load
+        document.addEventListener('DOMContentLoaded', fetchBookings);
+    </script>
+</body>
+</html>
