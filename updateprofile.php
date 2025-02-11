@@ -7,7 +7,6 @@ if ($user_id) {
     $name = $conn->real_escape_string($_POST['name']);
     $email = $conn->real_escape_string($_POST['email']);
     $phone = $conn->real_escape_string($_POST['phone']);
-    $dob = $conn->real_escape_string($_POST['dob']);
     $gender = $conn->real_escape_string($_POST['gender']);
     $address_type = $conn->real_escape_string($_POST['address-type']);
     $pincode = $conn->real_escape_string($_POST['pincode']);
