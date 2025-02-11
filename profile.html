@@ -492,5 +492,19 @@
                 navLinks.classList.toggle('active');
             });
       </script>
+
+    <script>
+        fetch('profile.php')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                alert(data.message); // Show alert
+                window.location.href = 'login.html'; // Redirect to login page
+            } else {
+                console.log("User Data:", data.data);
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    </script>
 </body>
 </html>
