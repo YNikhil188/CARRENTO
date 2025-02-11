@@ -4,6 +4,7 @@ include('config.php');
 // Ensure the user is logged in
 if (!isset($_SESSION['email'])) {
     echo "Please log in to view your bookings.";
+    header("Location: login.html");
     exit;
 }
 
